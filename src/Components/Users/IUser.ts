@@ -1,13 +1,13 @@
 export interface IUser {
-        id: number;
+        id?: number;
         name: string;
         username: string;
         email: string;
-        address: IAddress;
+        address?: IAddress;
         phone: string;
         website: string;
-        company: ICompany;
-    
+        company?: ICompany;
+
 }
 
 export interface IAddress {
@@ -16,15 +16,15 @@ export interface IAddress {
         city: string;
         zipcode: string;
         geo: {
-          lat: string;
-          lng: string;
+                lat: string;
+                lng: string;
         }
-    
+
 }
 
 export interface ICompany {
         name: string;
         catchPhrase: string;
         bs: string;
-    
+
 }
