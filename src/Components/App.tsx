@@ -14,7 +14,7 @@ function App() {
     //   <ButtonProps color="black" setText={setText}>{text}</ButtonProps> */}
     //   <Counter/>
     // </div>
-    <UserCards/>
+    <UserCards />
   );
 }
 

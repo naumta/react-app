@@ -1,3 +1,4 @@
+import { userInfo } from 'os';
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { IUser } from './IUser';
 import { USERS } from './users'
@@ -15,14 +16,14 @@ export const UserCards = () => {
     const [users, setUsers] = useState(USERS);
     const [value, setValue] = useState<IUser>(initialValue);
     //const [searched, setSearched] = useState([]);
-
+    
     const onSearch = (event:ChangeEvent<HTMLInputElement>) => {
         setUsers(users.filter((user) => user.name.toLowerCase().includes(event.target.value.toLowerCase())));
     };
-    
+
     const onChange = (event:ChangeEvent<HTMLInputElement>) => {
-       const field = event.target.id;
-       setValue({...value,[field]: event.target.value});
+        const field = event.target.id;
+        setValue({...value,[field]: event.target.value});
     };
     //console.log(value);
 
@@ -32,18 +33,25 @@ export const UserCards = () => {
         setValue(initialValue);
     };
 
+    const onRemove = (id: IUser["id"]) => {
+        setUsers(users.filter((user) => user.id !== id));
+    }
+
     return (
-        <div className="input-group flex-nowrap">
-            <span className="input-group-text" id="addon-wrapping">@</span>
-            <input type="text" 
-                className="form-control" 
-                placeholder="name" 
-                onChange = {(event) => onSearch(event)} 
-            >
+    <div className="container mt-5">
+        <h1 className="mb-5 text-center">Users</h1>
+
+        <div className="input-group mb-3">
+            <span className="input-group-text" id="basic-addon1">Search</span>
+            <input  type="text" 
+                    className="form-control"
+                    placeholder="Name"
+                    onChange={(event) => onSearch(event)}    
+        />
         </div>
 
     
-        <button type="button" className="btn btn-info mb-4" onClick={() => setShowUserForm(!showUserForm)}>Add user</button>
+        <button type="button" className="btn btn-info mb-4 mx-auto d-block" onClick={() => setShowUserForm(!showUserForm)}>Add user</button>
         {
             showUserForm && 
             <form className="col-3 mb-3" onSubmit={(event) => addUser(event)}>
@@ -79,8 +87,11 @@ export const UserCards = () => {
                                 <p className="card-text">Company: {user.company?.name}</p>
                             </div>
                             <div className="card-footer">
-                                <button type="button" className="btn btn-success mx-4">Edit user</button>
-                                <button type="button" className="btn btn-info">Remove user</button>
+                                <button type="button" className="btn btn-success me-4">Edit user</button>
+                                <button type="button" 
+                                        className="btn btn-danger" 
+                                        onClick={() => onRemove(user?.id)}>Remove user
+                                </button>
                                 
                             </div>
                         </div>
