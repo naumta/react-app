@@ -1,5 +1,7 @@
+
 import { userInfo } from 'os';
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useMemo, useState } from 'react'
+import http from '../../http';
 import { IUser } from './IUser';
 import { USERS } from './users'
 
@@ -13,13 +15,26 @@ const initialValue: IUser ={
 
 export const UserCards = () => {
     const [showUserForm, setShowUserForm] = useState(false);
-    const [users, setUsers] = useState(USERS);
+    const [users, setUsers] = useState<IUser[]>([]);
     const [value, setValue] = useState<IUser>(initialValue);
-    //const [searched, setSearched] = useState([]);
+    const [search, setSearch] = useState('');
     
-    const onSearch = (event:ChangeEvent<HTMLInputElement>) => {
-        setUsers(users.filter((user) => user.name.toLowerCase().includes(event.target.value.toLowerCase())));
-    };
+    const getUsers = () => {
+        http.get(`users`).then(res => {
+            setUsers(res.data);
+        })
+    }
+
+    // const onSearch = (event:ChangeEvent<HTMLInputElement>) => {
+    //     setUsers(users.filter((user) => user.name.toLowerCase().includes(event.target.value.toLowerCase())));
+    // };
+
+    const searchedUser = useMemo(() => {
+        if (search) {
+            return users.filter((user) => user.name.toLowerCase().includes(search.toLowerCase()));
+        }
+        return users;
+    }, [search, users]);
 
     const onChange = (event:ChangeEvent<HTMLInputElement>) => {
         const field = event.target.id;
@@ -28,14 +43,23 @@ export const UserCards = () => {
     //console.log(value);
 
     const addUser = (event:FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setUsers([ ...users, value]);
-        setValue(initialValue);
+        http.post(`posts`, users).then(res => {
+            event.preventDefault();
+            setUsers([ ...users, value]);
+            setValue(initialValue);
+        })
+        
     };
 
     const onRemove = (id: IUser["id"]) => {
-        setUsers(users.filter((user) => user.id !== id));
+        const isDelete = window.confirm("Really delete this user?");
+        if(isDelete) {
+            setUsers(users.filter((user) => user.id !== id));
+        }
     }
+
+    
+
 
     return (
     <div className="container mt-5">
@@ -46,11 +70,11 @@ export const UserCards = () => {
             <input  type="text" 
                     className="form-control"
                     placeholder="Name"
-                    onChange={(event) => onSearch(event)}    
+                    onChange={(event) => setSearch(event.target.value)}    
         />
         </div>
 
-    
+        <button type="button" className="btn btn-primary mb-4 mx-auto d-block" onClick={() => getUsers()}>Fetch user</button>
         <button type="button" className="btn btn-info mb-4 mx-auto d-block" onClick={() => setShowUserForm(!showUserForm)}>Add user</button>
         {
             showUserForm && 
@@ -73,7 +97,7 @@ export const UserCards = () => {
         }
 
             <div className="row row-cols-1 row-cols-md-3 g-4">
-                {users.map(user => 
+                {searchedUser.map(user => 
                     <div className="col" key={user.id}>
                         <div className="card h-100">
         
