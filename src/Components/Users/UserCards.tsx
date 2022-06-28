@@ -1,6 +1,6 @@
 
 import { userInfo } from 'os';
-import React, { ChangeEvent, FormEvent, useMemo, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react'
 import http from '../../http';
 import { IUser } from './IUser';
 import { USERS } from './users'
@@ -19,10 +19,16 @@ export const UserCards = () => {
     const [value, setValue] = useState<IUser>(initialValue);
     const [search, setSearch] = useState('');
     
+    useEffect(() => {
+        getUsers();
+    }, []);
+    
     const getUsers = () => {
         http.get(`users`).then(res => {
             setUsers(res.data);
         })
+
+    
     }
 
     // const onSearch = (event:ChangeEvent<HTMLInputElement>) => {
@@ -43,12 +49,11 @@ export const UserCards = () => {
     //console.log(value);
 
     const addUser = (event:FormEvent<HTMLFormElement>) => {
-        http.post(`posts`, users).then(res => {
-            event.preventDefault();
-            setUsers([ ...users, value]);
+        event.preventDefault();
+        http.post(`posts`, value).then(res => {
+            setUsers([ ...users, res.data]);
             setValue(initialValue);
         })
-        
     };
 
     const onRemove = (id: IUser["id"]) => {
@@ -74,7 +79,7 @@ export const UserCards = () => {
         />
         </div>
 
-        <button type="button" className="btn btn-primary mb-4 mx-auto d-block" onClick={() => getUsers()}>Fetch user</button>
+        {/* <button type="button" className="btn btn-primary mb-4 mx-auto d-block" onClick={() => getUsers()}>Fetch user</button> */}
         <button type="button" className="btn btn-info mb-4 mx-auto d-block" onClick={() => setShowUserForm(!showUserForm)}>Add user</button>
         {
             showUserForm && 
@@ -97,7 +102,9 @@ export const UserCards = () => {
         }
 
             <div className="row row-cols-1 row-cols-md-3 g-4">
-                {searchedUser.map(user => 
+                {searchedUser.length
+                ?
+                searchedUser.map(user => 
                     <div className="col" key={user.id}>
                         <div className="card h-100">
         
@@ -119,9 +126,10 @@ export const UserCards = () => {
                                 
                             </div>
                         </div>
-                    </div>
-                )}
-                
+                    </div>)
+                    :
+                    <h2>Users no found</h2>
+                }
             </div>
     </div>
     )
