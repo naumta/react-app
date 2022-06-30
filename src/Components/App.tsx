@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { Context } from '../Context/Context';
 import './App.css';
 import { AppRoutes } from './AppRoutes';
 import { ButtonProps } from './Buttons/ButtonState/ButtonProps';
@@ -10,13 +11,17 @@ import { UserCards } from './Users/UserCards';
 
 function App() {
   // const [text, setText] = useState('text for props Button');
+  const [isAuth, setAuth] = useState(false);
+  const[openModal, setOpenModal] = useState(false);
   return (
+    <Context.Provider value={{isAuth, setAuth}}>
     <BrowserRouter>
       <div className="App">
-        <NavBar />
+        <NavBar setOpenModal={setOpenModal}/>
         <AppRoutes />
       </div>
     </BrowserRouter>
+    </Context.Provider>
 
     // <div className="App">
     //   <h1>I'm React Application</h1>

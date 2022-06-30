@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { Link } from 'react-router-dom'
 
-export const NavBar = () => {
+export const NavBar = ({setOpenModal}: {setOpenModal:Dispatch<SetStateAction<boolean>>}) => {
     return (
 <nav className="navbar navbar-expand-lg bg-light">
     <div className="container-fluid">    
@@ -15,7 +15,7 @@ export const NavBar = () => {
           <Link to="posts" className="nav-link active" aria-current="page">Posts</Link>
         </li>
       </ul> 
-    
+    <button className="btn btn-primary" onClick={() => setOpenModal(true)}>Login</button>
     </div>
 </nav>
     )
