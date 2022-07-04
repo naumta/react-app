@@ -6,19 +6,21 @@ import { AppRoutes } from './AppRoutes';
 import { ButtonProps } from './Buttons/ButtonState/ButtonProps';
 import ButtonState from './Buttons/ButtonState/ButtonState';
 import { Counter } from './Counter/Counter';
+import { Modal } from './Modal/Modal';
 import { NavBar } from './NavBar/NavBar';
-import { UserCards } from './Users/UserCards';
+
 
 function App() {
   // const [text, setText] = useState('text for props Button');
-  const [isAuth, setAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
   const[openModal, setOpenModal] = useState(false);
   return (
-    <Context.Provider value={{isAuth, setAuth}}>
+    <Context.Provider value={{isAuth, setIsAuth}}>
     <BrowserRouter>
       <div className="App">
         <NavBar setOpenModal={setOpenModal}/>
         <AppRoutes />
+        <Modal openModal = {openModal} setOpenModal={setOpenModal}/>
       </div>
     </BrowserRouter>
     </Context.Provider>

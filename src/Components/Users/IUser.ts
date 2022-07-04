@@ -7,7 +7,6 @@ export interface IUser {
         phone: string;
         website: string;
         company?: ICompany;
-
 }
 
 export interface IAddress {
@@ -19,12 +18,10 @@ export interface IAddress {
                 lat: string;
                 lng: string;
         }
-
 }
 
 export interface ICompany {
         name: string;
         catchPhrase: string;
         bs: string;
-
 }
