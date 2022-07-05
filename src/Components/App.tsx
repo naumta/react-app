@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Context } from '../Context/Context';
 import './App.css';
@@ -13,9 +13,17 @@ import { NavBar } from './NavBar/NavBar';
 function App() {
   // const [text, setText] = useState('text for props Button');
   const [isAuth, setIsAuth] = useState(false);
+ 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuth(true);
+    }
+  })
+
   const[openModal, setOpenModal] = useState(false);
   return (
-    <Context.Provider value={{isAuth, setIsAuth}}>
+    <Context.Provider value={{isAuth, setIsAuth, setOpenModal}}>
     <BrowserRouter>
       <div className="App">
         <NavBar setOpenModal={setOpenModal}/>

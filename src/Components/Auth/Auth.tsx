@@ -3,24 +3,26 @@ import { Context } from '../../Context/Context';
 import http from '../../http';
 
 export const Auth = () => {
-    const {setIsAuth} = useContext(Context);
+    const {setIsAuth, setOpenModal} = useContext(Context);
 
     const [username] = useState('mor_2314');
     const [password] = useState('83r5^_');
+    const JSON_URL = `https://fakestoreapi.com/auth/login`
 
     const login = () => {
-        http.post(`https://fakestoreapi.com/auth/login`, {username, password}).then(res => {
-            if(res.status === 200) {
-                setIsAuth(true);
-            }
+        http.post(JSON_URL, {username, password}).then(res => {
+            localStorage.setItem('token', res.data.token)    
+            setIsAuth(true);
+            setOpenModal(false);
+            
             //console.log(res);
         });
     };
 
     return (
-        <>
+    <>
         <div className="input-group flex-nowrap mb-4">
-            <input type="text"
+            <input type="email"
                     defaultValue={'mor_2314'}
                     className="form-control"
                     placeholder="Username" 
@@ -28,7 +30,7 @@ export const Auth = () => {
             />
         </div>
         <div  className="input-group flex-nowrap mb-4">
-            <input type="text" 
+            <input type="password" 
                     defaultValue={'83r5^_'}
                     className="form-control" 
                     placeholder="Password" 
