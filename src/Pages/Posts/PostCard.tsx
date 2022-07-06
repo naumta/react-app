@@ -4,7 +4,7 @@ import { IPost } from './IPost'
 export const PostCard = ({posts, deletePost}: {posts: IPost[], deletePost: (id: number) => void 
 }) => {
     return (
-    <div className="row row-cols-1 row-cols-md-3 g-4">
+    <div className="row row-cols-1 row-cols-md-4 g-4 m-3">
         {posts.length
             ?
             posts.map(post => 

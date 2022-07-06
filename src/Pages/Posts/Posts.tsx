@@ -27,7 +27,7 @@ export const Posts = () => {
     
     return (
         <>
-        <h1>Posts</h1>
+        <h1 className='mt-3'>Posts</h1>
         {posts.length
         ?
         <PostCard posts={posts} deletePost={deletePost} />
