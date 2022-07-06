@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { FormEvent, useContext, useState } from 'react'
 import { Context } from '../../Context/Context';
 import http from '../../http';
 
@@ -9,7 +9,8 @@ export const Auth = () => {
     const [password] = useState('83r5^_');
     const JSON_URL = `https://fakestoreapi.com/auth/login`
 
-    const login = () => {
+    const login = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         http.post(JSON_URL, {username, password}).then(res => {
             localStorage.setItem('token', res.data.token)    
             setIsAuth(true);
@@ -20,9 +21,9 @@ export const Auth = () => {
     };
 
     return (
-    <>
+    <form onSubmit={(event) => login(event)}>
         <div className="input-group flex-nowrap mb-4">
-            <input type="email"
+            <input type="text"
                     defaultValue={'mor_2314'}
                     className="form-control"
                     placeholder="Username" 
@@ -38,8 +39,8 @@ export const Auth = () => {
             />
         </div>
                 
-        <button className="btn btn-success" onClick={login}>Login</button>
+        <button className="btn btn-success" >Login</button>
     
-    </>
+    </form>
     )
 }

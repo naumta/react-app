@@ -1,5 +1,4 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { ImportDeclaration } from "typescript";
 import { IAuth } from "./IAuth";
 
 type Registration = IAuth & IModal;

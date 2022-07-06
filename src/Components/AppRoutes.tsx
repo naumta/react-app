@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { Context } from '../Context/Context'
-import { Posts } from '../Pages/Posts'
+import { Posts } from '../Pages/Posts/Posts'
 import { User } from '../Pages/User'
 import { Users } from '../Pages/Users'
 
