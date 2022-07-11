@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Context } from '../Context/Context';
 import './App.css';
 import { AppRoutes } from './AppRoutes';
@@ -24,13 +24,13 @@ function App() {
   const[openModal, setOpenModal] = useState(false);
   return (
     <Context.Provider value={{isAuth, setIsAuth, setOpenModal}}>
-    <BrowserRouter>
+    <HashRouter>
       <div className="App">
         <NavBar setOpenModal={setOpenModal}/>
         <AppRoutes />
         <Modal openModal = {openModal} setOpenModal={setOpenModal}/>
       </div>
-    </BrowserRouter>
+    </HashRouter>
     </Context.Provider>
 
     // <div className="App">

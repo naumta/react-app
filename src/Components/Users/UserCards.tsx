@@ -2,7 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { IUser } from './IUser';
 
-export const UserCards = ({users, deleteUser}: {users:IUser[], deleteUser:(id?:number) => void
+export const UserCards = (
+    {
+        users, 
+    // deleteUser
+}: {
+    users:IUser[], 
+    // deleteUser:(id?:number) => void
 }) => {
     
     return (    
@@ -28,7 +34,9 @@ export const UserCards = ({users, deleteUser}: {users:IUser[], deleteUser:(id?:n
                         <button type="button" className="btn btn-success me-4">Edit user</button>
                         <button type="button" 
                                 className="btn btn-danger" 
-                                onClick={() => deleteUser(user?.id)}>Remove user
+                                //onClick={() => deleteUser(user?.id)}
+                                
+                                >Remove user
                         </button>
                         
                     </div>
